@@ -15,7 +15,12 @@ Rss.EventEmitter.prototype = Object.create(new Object(), {
     },
     'once' : {
         'value' : function (event, handler) {
-            
+            if (!this.onceListeners) this.onceListeners = {};
+            if (!this.onceListeners[event]) this.onceListeners[event] = [];
+
+            this.onceListeners[event].push(handler);
+
+            return this;
         }
     },
     'emit' : {
@@ -25,6 +30,14 @@ Rss.EventEmitter.prototype = Object.create(new Object(), {
                 this.listeners[event].forEach(function(element) {
                     element.call(self, eventData);
                 });
+            }
+            
+            if (this.onceListeners && this.onceListeners[event] instanceof Array) {
+                this.onceListeners[event].forEach(function(element) {
+                    element.call(self, eventData);
+                });
+                
+                delete this.onceListeners[event];
             }
 
             return this;
