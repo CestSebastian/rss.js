@@ -46,10 +46,10 @@ Rss.Router = function() {
         _loadModule();
     }
     
-    this.init = function(global) {
+    this.init = function() {
         _processHash();
         
-        global.onhashchange = function () {
+        window.onhashchange = function () {
             _processHash();
         }
         
