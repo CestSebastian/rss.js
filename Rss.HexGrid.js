@@ -2,7 +2,7 @@
 /*
  * requires Rss.HexGrid
  */
-Rss.Grid = function(x, y, hexagonSize, hasBorder, borderColor, appendTo, canvasId) {
+Rss.HexGrid = function(x, y, hexagonSize, hasBorder, borderColor, appendTo, canvasId) {
     this.x = x;
     this.y = y;
     this.squareSize = hexagonSize;
