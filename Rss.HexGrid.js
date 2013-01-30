@@ -3,15 +3,18 @@
  * requires Rss.HexGrid
  */
 Rss.HexGrid = function(x, y, hexagonSize, hasBorder, borderColor, appendTo, canvasId) {
+    var i, j;
     this.x = x;
     this.y = y;
     this.squareSize = hexagonSize;
     this.borderSize = hasBorder ? 1 : 0;
     
+    var self = this;
+    
     var rssCanvas = new Rss.Canvas(appendTo, canvasId);
     
-    var canvasWidth     = x * hexagonSize + this.borderSize;
-    var canvasHeight    = y * hexagonSize + this.borderSize;
+    var canvasWidth     = x * hexagonSize + this.borderSize + hexagonSize / 2;
+    var canvasHeight    = y * hexagonSize + this.borderSize - (y - 1) * hexagonSize / 4;
 
     rssCanvas.getCanvas().setAttribute('width', canvasWidth);
     rssCanvas.getCanvas().setAttribute('height', canvasHeight);
@@ -19,18 +22,44 @@ Rss.HexGrid = function(x, y, hexagonSize, hasBorder, borderColor, appendTo, canv
     var context = rssCanvas.getContext2d();
     
     var _makeGrid = function() {
-        for (var x = 0; x <= canvasWidth; x += hexagonSize) {
-            for (var y=hexagonSize; y<= canvasHeight; y += hexagonSize) {
-                context.moveTo(x + 0.5, y * 1 / 4);
-                context.lineTo(x + 0.5, y * 3 / 4);
+        var counter;
+        for (i = 0; i <= canvasWidth; i += hexagonSize) {
+            counter = 0;
+            for (j=0; j < hexagonSize * self.y; j += hexagonSize) {
+                if (counter % 2 == 0) {
+                    context.moveTo(i, j + (hexagonSize * 1 / 4) - hexagonSize * counter * 1 / 4);
+                    context.lineTo(i, j + (hexagonSize * 3 / 4) - hexagonSize * counter * 1 / 4);
+                } else {
+                    context.moveTo(i + hexagonSize / 2, j + (hexagonSize * 1 / 4) - hexagonSize * counter * 1 / 4);
+                    context.lineTo(i + hexagonSize / 2, j + (hexagonSize * 3 / 4) - hexagonSize * counter * 1 / 4);
+                }
+                
+                counter++;
             }
         }
 
-        for (var x = 1; x <= canvasHeight; x += hexagonSize) {
-            context.moveTo(0, x - 0.5);
-            context.lineTo(canvasWidth, x - 0.5);
+        counter = 0;
+        for (i = 0; i <= hexagonSize * self.y; i += hexagonSize) {
+            for (j = 0; j < canvasWidth; j += hexagonSize) {
+                if (counter % 2 == 0) {
+                    if (j + hexagonSize < canvasWidth || i !== 0) {
+                        context.moveTo(j, i + hexagonSize * 1 / 4 - hexagonSize * counter * 1 / 4);
+                        context.lineTo(j + hexagonSize / 2, i - hexagonSize * counter * 1 / 4);
+                        context.lineTo(j + hexagonSize, i + hexagonSize * 1 / 4 - hexagonSize * counter * 1 / 4);
+                    }
+                } else {
+                    if (j + hexagonSize < canvasWidth || i !== hexagonSize * self.y) {
+                        context.moveTo(j, i - hexagonSize * counter * 1 / 4);
+                        context.lineTo(j + hexagonSize / 2, i + hexagonSize * 1 / 4 - hexagonSize * counter * 1 / 4);
+                        context.lineTo(j + hexagonSize / 2 + hexagonSize / 2, i - hexagonSize * counter * 1 / 4);
+                        context.lineTo(j + hexagonSize + hexagonSize / 2, i + hexagonSize * 1 / 4 - hexagonSize * counter * 1 / 4);
+                    }
+                }
+                
+            }
+            counter++;
         }
-
+        
         if (borderColor) {
             context.strokeStyle = borderColor;
             context.stroke();
