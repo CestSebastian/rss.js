@@ -40,6 +40,7 @@ Rss.Grid = function(x, y, squareSize, hasBorder, borderColor, appendTo, canvasId
     }
     
     this.fillSquare = function(x, y, fillStyle) {
+        console.log('grid', x, y)
         context.fillStyle = fillStyle;
         if (x <= this.x && y <= this.y && x >=0 && y >= 0)
             context.fillRect(x * this.squareSize + this.borderSize, y * this.squareSize + this.borderSize, this.squareSize - this.borderSize, this.squareSize - this.borderSize);
