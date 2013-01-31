@@ -5,7 +5,7 @@ Rss.Canvas = function(appendTo, canvasId) {
     if (!canvasId) canvasId = 'canvas';
     
     var _canvas = document.createElement('canvas');
-    _canvas.setAttribute('id', 'canvas');
+    _canvas.setAttribute('id', canvasId);
     
     appendTo.appendChild(_canvas);
     
