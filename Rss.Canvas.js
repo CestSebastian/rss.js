@@ -14,13 +14,13 @@ Rss.Canvas = function(appendTo, canvasId, width, height) {
     
     this.getCanvas = function() {
         return _canvas;
-    }
+    };
     
     this.getContext2d = function() {
         return _canvas.getContext('2d');
-    }
+    };
     
     this.destroy = function() {
         appendTo.removeChild(_canvas);
-    }
-}
+    };
+};
