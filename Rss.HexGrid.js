@@ -26,7 +26,7 @@ Rss.HexGrid = function(x, y, hexagonSize, hasBorder, borderColor, appendTo, canv
         for (i = 0; i <= canvasWidth; i += hexagonSize) {
             counter = 0;
             for (j=0; j < hexagonSize * self.y; j += hexagonSize) {
-                if (counter % 2 == 0) {
+                if (counter % 2 === 0) {
                     context.moveTo(i, j + (hexagonSize * 1 / 4) - hexagonSize * counter * 1 / 4);
                     context.lineTo(i, j + (hexagonSize * 3 / 4) - hexagonSize * counter * 1 / 4);
                 } else {
@@ -41,7 +41,7 @@ Rss.HexGrid = function(x, y, hexagonSize, hasBorder, borderColor, appendTo, canv
         counter = 0;
         for (i = 0; i <= hexagonSize * self.y; i += hexagonSize) {
             for (j = 0; j < canvasWidth; j += hexagonSize) {
-                if (counter % 2 == 0) {
+                if (counter % 2 === 0) {
                     if (j + hexagonSize < canvasWidth || i !== 0) {
                         context.moveTo(j, i + hexagonSize * 1 / 4 - hexagonSize * counter * 1 / 4);
                         context.lineTo(j + hexagonSize / 2, i - hexagonSize * counter * 1 / 4);
@@ -64,34 +64,34 @@ Rss.HexGrid = function(x, y, hexagonSize, hasBorder, borderColor, appendTo, canv
             context.strokeStyle = borderColor;
             context.stroke();
         }
-    }
+    };
     
     this.getRssCanvas = function() {
         return rssCanvas;
-    }
+    };
     
     this.fillSquare = function(x, y, fillStyle) {
         context.fillStyle = fillStyle;
         if (x <= this.x && y <= this.y && x >=0 && y >= 0)
             context.fillRect(x * this.squareSize + this.borderSize, y * this.squareSize + this.borderSize, this.squareSize - this.borderSize, this.squareSize - this.borderSize);
-    }
+    };
     
     this.clearSquare = function(x, y) {
         if (x <= this.x && y <= this.y && x >=0 && y >= 0)
             context.clearRect(x * this.squareSize + this.borderSize, y * this.squareSize + this.borderSize, this.squareSize - this.borderSize, this.squareSize - this.borderSize);
-    }
+    };
     
     this.clearAll = function() {
         context.clearRect ( 0 , 0 , canvasWidth , canvasHeight );
         
         if (hasBorder)
             _makeGrid();
-    }
+    };
     
     this.destroy = function() {
         rssCanvas.destroy();
-    }
+    };
     
     if (hasBorder)
         _makeGrid();
-}
+};
