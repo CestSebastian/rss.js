@@ -1,6 +1,6 @@
 'use strict';
 /*
- * requires Rss.Grid
+ * requires Rss.Canvas
  */
 Rss.Grid = function(x, y, squareSize, hasBorder, borderColor, appendTo, canvasId) {
     this.x = x;
@@ -33,33 +33,33 @@ Rss.Grid = function(x, y, squareSize, hasBorder, borderColor, appendTo, canvasId
             context.strokeStyle = borderColor;
             context.stroke();
         }
-    }
+    };
     
     this.getRssCanvas = function() {
         return rssCanvas;
-    }
+    };
     
     this.fillSquare = function(x, y, fillStyle) {
         context.fillStyle = fillStyle;
         if (x <= this.x && y <= this.y && x >=0 && y >= 0)
             context.fillRect(x * this.squareSize + this.borderSize, y * this.squareSize + this.borderSize, this.squareSize - this.borderSize, this.squareSize - this.borderSize);
-    }
+    };
     
     this.clearSquare = function(x, y) {
         if (x <= this.x && y <= this.y && x >=0 && y >= 0)
             context.clearRect(x * this.squareSize + this.borderSize, y * this.squareSize + this.borderSize, this.squareSize - this.borderSize, this.squareSize - this.borderSize);
-    }
+    };
     
     this.clearAll = function() {
         context.clearRect ( 0 , 0 , canvasWidth , canvasHeight );
         
         if (hasBorder)
             _makeGrid();
-    }
+    };
     
     this.destroy = function() {
         rssCanvas.destroy();
-    }
+    };
     
     this.getRssCanvas().getCanvas().addEventListener('click', function (event) {
         var x, y;
@@ -72,6 +72,6 @@ Rss.Grid = function(x, y, squareSize, hasBorder, borderColor, appendTo, canvasId
     
     if (hasBorder)
         _makeGrid();
-}
+};
 
 Rss.Grid.prototype = new Rss.EventEmitter();
