@@ -23,15 +23,15 @@ Rss.Ajax = function(settings) {
 
     if (_success) {
         _xmlHttpRequest.onreadystatechange = function () {
-            if (_xmlHttpRequest.readyState==4 && _xmlHttpRequest.status==200) {
+            if (_xmlHttpRequest.readyState === 4 && _xmlHttpRequest.status === 200) {
                 if (_success) {
                     _success.call(null, _xmlHttpRequest.responseText, _xmlHttpRequest);
                 }
 
             }
-        }
+        };
     }
 
     _xmlHttpRequest.open(_method, _url, _async);
     _xmlHttpRequest.send();
-}
+};
